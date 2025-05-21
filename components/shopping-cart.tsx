@@ -9,17 +9,24 @@ import { Separator } from "@/components/ui/separator"
 // Mock data for shopping cart
 const initialCartItems = [
   {
-    id: "item-1",
-    name: "Smartphone XYZ",
-    price: 12999.99,
+    id: "course-1",
+    name: "JLPT N5 Complete Course",
+    price: 299.99,
     quantity: 1,
     image: "/placeholder.svg?height=80&width=80",
   },
   {
-    id: "item-2",
-    name: "Auriculares Bluetooth",
-    price: 1499.99,
+    id: "course-2",
+    name: "Japanese Writing Practice Book",
+    price: 24.99,
     quantity: 2,
+    image: "/placeholder.svg?height=80&width=80",
+  },
+  {
+    id: "course-3",
+    name: "Online Speaking Practice Sessions",
+    price: 49.99,
+    quantity: 1,
     image: "/placeholder.svg?height=80&width=80",
   },
 ]
@@ -27,30 +34,22 @@ const initialCartItems = [
 export function ShoppingCart() {
   const [cartItems, setCartItems] = useState(initialCartItems)
 
-  // Calculate subtotal
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-
-  // Fixed shipping cost
-  const shipping = 150
-
-  // Calculate total
+  const shipping = 0 // Free shipping for courses
   const total = subtotal + shipping
 
-  // Update item quantity
   const updateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) return
-
     setCartItems((items) => items.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
   }
 
-  // Remove item from cart
   const removeItem = (id: string) => {
     setCartItems((items) => items.filter((item) => item.id !== id))
   }
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Carrito de Compras</h2>
+      <h2 className="text-2xl font-bold">Course Cart</h2>
 
       {cartItems.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-[1fr_300px]">
@@ -58,10 +57,10 @@ export function ShoppingCart() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[100px]">Producto</TableHead>
-                  <TableHead>Descripción</TableHead>
-                  <TableHead>Precio</TableHead>
-                  <TableHead>Cantidad</TableHead>
+                  <TableHead className="w-[100px]">Course</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Quantity</TableHead>
                   <TableHead>Total</TableHead>
                   <TableHead className="w-[70px]"></TableHead>
                 </TableRow>
@@ -77,7 +76,7 @@ export function ShoppingCart() {
                       />
                     </TableCell>
                     <TableCell className="font-medium">{item.name}</TableCell>
-                    <TableCell>${item.price.toLocaleString("es-MX")}</TableCell>
+                    <TableCell>${item.price.toLocaleString("en-US")}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Button
@@ -100,7 +99,7 @@ export function ShoppingCart() {
                       </div>
                     </TableCell>
                     <TableCell className="font-medium">
-                      ${(item.price * item.quantity).toLocaleString("es-MX")}
+                      ${(item.price * item.quantity).toLocaleString("en-US")}
                     </TableCell>
                     <TableCell>
                       <Button variant="ghost" size="icon" onClick={() => removeItem(item.id)}>
@@ -115,34 +114,32 @@ export function ShoppingCart() {
 
           <div>
             <div className="rounded-lg border bg-card p-4 text-card-foreground shadow-sm">
-              <h3 className="mb-4 text-lg font-semibold">Resumen de Compra</h3>
+              <h3 className="mb-4 text-lg font-semibold">Order Summary</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span>${subtotal.toLocaleString("es-MX")}</span>
+                  <span>${subtotal.toLocaleString("en-US")}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Envío</span>
-                  <span>${shipping.toLocaleString("es-MX")}</span>
+                  <span className="text-muted-foreground">Shipping</span>
+                  <span>Free</span>
                 </div>
                 <Separator />
                 <div className="flex items-center justify-between font-medium">
                   <span>Total</span>
-                  <span>${total.toLocaleString("es-MX")}</span>
+                  <span>${total.toLocaleString("en-US")}</span>
                 </div>
-                <Button className="w-full">Proceder al Pago</Button>
+                <Button className="w-full">Proceed to Checkout</Button>
               </div>
             </div>
           </div>
         </div>
       ) : (
         <div className="flex h-60 flex-col items-center justify-center gap-4 rounded-md border border-dashed">
-          <p className="text-muted-foreground">Tu carrito está vacío</p>
-          <Button>Explorar Productos</Button>
+          <p className="text-muted-foreground">Your cart is empty</p>
+          <Button>Browse Courses</Button>
         </div>
       )}
     </div>
   )
-}
-
-
+} 

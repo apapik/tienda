@@ -11,54 +11,54 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 const announcementsData = [
   {
     id: "ann-1",
-    title: "Gran Venta de Verano",
-    description: "Aprovecha descuentos de hasta 50% en productos seleccionados durante todo el mes de julio.",
-    date: "2023-07-01",
+    title: "New JLPT N5 Course Available",
+    description: "Start your Japanese language journey with our comprehensive JLPT N5 preparation course.",
+    date: "2024-03-01",
     image: "/placeholder.svg?height=200&width=400",
-    type: "promotion",
+    type: "new-course",
     featured: true,
   },
   {
     id: "ann-2",
-    title: "Nuevos Smartphones 2023",
-    description: "Descubre la nueva línea de smartphones con tecnología de punta y características innovadoras.",
-    date: "2023-06-15",
+    title: "Summer Intensive Program",
+    description: "Join our 8-week intensive Japanese program with native speakers and cultural activities.",
+    date: "2024-02-15",
     image: "/placeholder.svg?height=200&width=400",
-    type: "new-product",
+    type: "event",
     featured: true,
   },
   {
     id: "ann-3",
-    title: "Envío Gratis en Compras Mayores a $1,500",
-    description: "Por tiempo limitado, todas las compras superiores a $1,500 tienen envío gratis a todo el país.",
-    date: "2023-06-10",
+    title: "Free Hiragana Workshop",
+    description: "Learn the basics of Hiragana writing system in our free weekend workshop.",
+    date: "2024-02-10",
     image: "/placeholder.svg?height=200&width=400",
-    type: "promotion",
+    type: "workshop",
     featured: false,
   },
   {
     id: "ann-4",
-    title: "Evento de Lanzamiento: Gadgets 2023",
-    description: "Te invitamos a nuestro evento virtual donde presentaremos los gadgets más innovadores del año.",
-    date: "2023-07-20",
+    title: "Japanese Culture Day",
+    description: "Experience traditional Japanese culture with tea ceremony and calligraphy workshops.",
+    date: "2024-03-20",
     image: "/placeholder.svg?height=200&width=400",
     type: "event",
     featured: false,
   },
   {
     id: "ann-5",
-    title: "Programa de Lealtad",
-    description: "Únete a nuestro programa de lealtad y obtén puntos por cada compra que realices.",
-    date: "2023-06-05",
+    title: "Study Group Sessions",
+    description: "Join our weekly study groups to practice Japanese conversation with other learners.",
+    date: "2024-02-05",
     image: "/placeholder.svg?height=200&width=400",
     type: "news",
     featured: false,
   },
   {
     id: "ann-6",
-    title: "Nueva Política de Devoluciones",
-    description: "Hemos actualizado nuestra política de devoluciones para brindarte una mejor experiencia de compra.",
-    date: "2023-06-01",
+    title: "New Learning Materials",
+    description: "Access our updated collection of Japanese learning resources and practice materials.",
+    date: "2024-02-01",
     image: "/placeholder.svg?height=200&width=400",
     type: "news",
     featured: false,
@@ -68,7 +68,6 @@ const announcementsData = [
 export function Announcements() {
   const [filter, setFilter] = useState("all")
 
-  // Filter announcements based on selected tab
   const filteredAnnouncements =
     filter === "all"
       ? announcementsData
@@ -76,39 +75,36 @@ export function Announcements() {
           filter === "featured" ? announcement.featured : announcement.type === filter,
         )
 
-  // Format date to a more readable format
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
       month: "long",
       day: "numeric",
     }
-    return new Date(dateString).toLocaleDateString("es-ES", options)
+    return new Date(dateString).toLocaleDateString("en-US", options)
   }
 
-  // Get badge for announcement type
   const getTypeBadge = (type: string) => {
     switch (type) {
-      case "promotion":
-        return <Badge className="bg-green-500">Promoción</Badge>
-      case "new-product":
-        return <Badge className="bg-blue-500">Nuevo Producto</Badge>
+      case "new-course":
+        return <Badge className="bg-green-500">New Course</Badge>
+      case "workshop":
+        return <Badge className="bg-blue-500">Workshop</Badge>
       case "event":
-        return <Badge className="bg-purple-500">Evento</Badge>
+        return <Badge className="bg-purple-500">Event</Badge>
       case "news":
-        return <Badge className="bg-amber-500">Noticia</Badge>
+        return <Badge className="bg-amber-500">News</Badge>
       default:
         return <Badge>{type}</Badge>
     }
   }
 
-  // Get icon for announcement type
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case "promotion":
-        return <Tag className="h-4 w-4" />
-      case "new-product":
+      case "new-course":
         return <Star className="h-4 w-4" />
+      case "workshop":
+        return <Tag className="h-4 w-4" />
       case "event":
         return <Calendar className="h-4 w-4" />
       case "news":
@@ -121,24 +117,23 @@ export function Announcements() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Anuncios y Novedades</h2>
+        <h2 className="text-2xl font-bold">Course Updates</h2>
       </div>
 
       <Tabs defaultValue="all" value={filter} onValueChange={setFilter}>
         <TabsList className="mb-4">
-          <TabsTrigger value="all">Todos</TabsTrigger>
-          <TabsTrigger value="featured">Destacados</TabsTrigger>
-          <TabsTrigger value="promotion">Promociones</TabsTrigger>
-          <TabsTrigger value="new-product">Nuevos Productos</TabsTrigger>
-          <TabsTrigger value="event">Eventos</TabsTrigger>
-          <TabsTrigger value="news">Noticias</TabsTrigger>
+          <TabsTrigger value="all">All</TabsTrigger>
+          <TabsTrigger value="featured">Featured</TabsTrigger>
+          <TabsTrigger value="new-course">New Courses</TabsTrigger>
+          <TabsTrigger value="workshop">Workshops</TabsTrigger>
+          <TabsTrigger value="event">Events</TabsTrigger>
+          <TabsTrigger value="news">News</TabsTrigger>
         </TabsList>
 
         <TabsContent value={filter} className="mt-0">
-          {/* Featured announcements (larger cards) */}
           {filter === "all" && (
             <div className="mb-8">
-              <h3 className="mb-4 text-lg font-semibold">Destacados</h3>
+              <h3 className="mb-4 text-lg font-semibold">Featured Updates</h3>
               <div className="grid gap-6 md:grid-cols-2">
                 {announcementsData
                   .filter((announcement) => announcement.featured)
@@ -164,7 +159,7 @@ export function Announcements() {
                       </CardContent>
                       <CardFooter className="p-4 pt-0">
                         <Button variant="link" className="px-0">
-                          Ver más <ArrowRight className="ml-2 h-4 w-4" />
+                          Learn More <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                       </CardFooter>
                     </Card>
@@ -173,7 +168,6 @@ export function Announcements() {
             </div>
           )}
 
-          {/* All announcements */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredAnnouncements.map((announcement) => (
               <Card key={announcement.id} className={filter === "all" && announcement.featured ? "hidden" : ""}>
@@ -197,7 +191,7 @@ export function Announcements() {
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
                   <Button variant="link" className="px-0">
-                    Ver más <ArrowRight className="ml-2 h-4 w-4" />
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </CardFooter>
               </Card>
@@ -206,12 +200,11 @@ export function Announcements() {
 
           {filteredAnnouncements.length === 0 && (
             <div className="flex h-40 items-center justify-center rounded-md border border-dashed">
-              <p className="text-muted-foreground">No hay anuncios disponibles con el filtro seleccionado.</p>
+              <p className="text-muted-foreground">No updates available for the selected filter.</p>
             </div>
           )}
         </TabsContent>
       </Tabs>
     </div>
   )
-}
-
+} 
